@@ -1,0 +1,70 @@
+<!Doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .frame {
+            background-color: aquamarine;
+        }
+
+        .red {
+            background-color: red;
+        }
+
+        .black {
+            background-color: black;
+        }
+
+        .blue {
+            background-color: blue;
+        }
+
+        div {
+            float: right;
+            width: 200px;
+            height: 400px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="frame">
+        <div class="red"></div>
+        <div class="black"></div>
+        <div class="blue"></div>
+    </div>
+</body>
+
+</html>
+<script>
+    var obj1 = {
+        name: "wjc"
+    };
+    var obj2 = {
+        name: "wy"
+    };
+
+    console.log(obj1.name.toString());
+    console.log(obj1.toString());
+    console.log(obj2.toString());
+    //obj1.toString 和 obj2.toString 其实是同一个东西, window.Object.prototype.toString()
+    console.log(obj1.toString() === obj2.toString());
+
+    obj2.__proto__.toString = function () {
+        return '新的方法';
+    };
+    //改写 obj2.__proto__.toString，那么 obj1.toString 其实也会变
+    console.log(obj1.toString());
+    console.log(obj2.toString());
+
+    // 要让toString()行为不同, 重新赋值.
+    obj1.toString = function () {
+        return '不一样的方法!';
+    };
+    console.log(obj1.toString());
+    console.log(obj2.toString());
+</script>

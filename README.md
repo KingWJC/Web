@@ -3,9 +3,9 @@
 
 前端分为三层：
 
-1. 结构层 前面课程当中学习标签HTML
-2. 样式层 前面课程我们学习样式CSS
-3. 行为层 即将学习javaScript
+1. 结构层 标签HTML
+2. 样式层 样式CSS
+3. 行为层 javaScript
 
 ### 学习手册：
 
@@ -23,7 +23,7 @@ http://nodejs.cn/ node平台
 
 https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API/Tutorial canvas
 
-https://www.echartsjs.com/examples/zh/index.html 图表函数库
+https://www.echartsjs.com/examples/zh/index.html echarts图表函数库
 
 https://threejs.org/examples/#webgl_camera webGL学习手册
 

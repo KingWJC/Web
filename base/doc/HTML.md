@@ -13,6 +13,8 @@ DOCTYPE，HTML，HEAD（META，TITLE），BODY。Style，Script。Script标签�
 <html lang="en">  
 	<head>
         <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    		<meta http-equiv="X-UA-Compatible" content="ie=edge">
         <!--放入网页描述，如link,meta,title,style,script-->
         <title>My website</title>
 	</head>
