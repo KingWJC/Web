@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JQuery轮播图</title>
+
+    <link rel="stylesheet" href="./css/carousel.css" />
+    <script src="./js/jQuery.min.js"></script>
+</head>
+<body>
+    <div>
+        <!--有序列表去做显示图片  -->
+        <ul>
+            <li class="current"><img src="./img/1.jpg" alt=""></li>
+            <li><img src="./img/2.jpg" alt=""></li>
+            <li><img src="./img/3.jpg" alt=""></li>
+            <li><img src="./img/4.jpg" alt=""></li>
+            <li><img src="./img/5.jpg" alt=""></li>
+        </ul>
+        <!-- 做左右按钮 -->
+        <button class="lbn"><</button>
+        <button class="rbn" onclick="rightHandle()">></button>
+        <!-- 分页器 -->
+        <ol>
+            <li class="cur">1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ol>
+    </div>
+</body>
+</html>
+<script>
+    //列表的索引指针，全局变量（控制某一个li运动）
+    var idx = 0;
+    //显示下一张
+    function rightHandle() {
+        //当前图片从left为0位置向左运动到-600
+        $("ul li").eq(idx).css({
+            "left": 0
+        }).animate({
+            "left": -600
+        }, 500);
+        //指针变化
+        idx++;
+        idx = idx > 4 ? 0 : idx;
+        //下一张图从右向左进入
+        $("ul li").eq(idx).css({
+            "left": 600
+        }).stop(true).animate({
+            "left": 0
+        }, 500);
+        //分页器也跟着变化
+        $("ol li").eq(idx).addClass("cur").siblings().removeClass("cur");
+    }
+
+    //使用定时器自动轮播
+    var timer = setInterval(rightHandle, 1500);
+    //鼠标移上后，清除定时器
+    $("div").mouseenter(function () {
+        clearInterval(timer);
+    })
+    //鼠标移出后，重新赋值定时器
+    $("div").mouseleave(function () {
+        timer = setInterval(rightHandle, 1500);
+    })
+
+    //显示上一张
+    function leftHandle() {
+        //当前图片从left为0位置向右运动到600
+        $("ul li").eq(idx).css({
+            "left": 0
+        }).stop(true).animate({
+            "left": 600
+        }, 500);
+        //指针变化
+        idx--;
+        idx = idx < 0 ? 4 : idx;
+        //上一张图从右向左进入
+        $("ul li").eq(idx).css({
+            "left": -600
+        }).animate({
+            "left": 0
+        }, 500);
+        //分页器也跟着变化
+        $("ol li").eq(idx).addClass("cur").siblings().removeClass("cur");
+    }
+
+    $(".lbn").click(leftHandle);
+
+    //分页器业务
+    $("ol li").click(function () {
+        var index = $(this).index();
+
+        if (index > idx) {
+            //当前图片左移隐藏
+            $("ul li").eq(idx).css({
+                "left": 0
+            }).stop(true).animate({
+                "left": -600
+            }, 500);
+            //选择的图片从右向左，出现在显示区。
+            $("ul li").eq(index).css({
+                "left": 600
+            }).stop(true).animate({
+                "left": 0
+            }, 500);
+        }
+        else if (index < idx) {
+            //当前图片右移隐藏
+            $("ul li").eq(idx).css({
+                "left": 0
+            }).stop(true).animate({
+                "left": -600
+            }, 500);
+            //选择的图片从左向右，出现在显示区。
+            $("ul li").eq(index).css({
+                "left": 600
+            }).stop(true).animate({
+                "left": 0
+            }, 500);
+        }
+        //指针变化
+        idx = index;
+        //分页器也跟着变化
+        $("ol li").eq(idx).addClass("cur").siblings().removeClass("cur");
+    })
+</script>

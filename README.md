@@ -3,9 +3,15 @@
 
 前端分为三层：
 
-1. 结构层 标签HTML
+1. 结构层 标签HTM
 2. 样式层 样式CSS
 3. 行为层 javaScript
+
+### 学习课程
+
+https://github.com/microsoft/Web-Dev-For-Beginners
+
+https://www.freecodecamp.org/learn
 
 ### 学习手册：
 
@@ -26,6 +32,10 @@ https://developer.mozilla.org/zh-CN/docs/Web/API/Canvas_API/Tutorial canvas
 https://www.echartsjs.com/examples/zh/index.html echarts图表函数库
 
 https://threejs.org/examples/#webgl_camera webGL学习手册
+
+https://threejs.org/  3D效果
+
+https://www.swiper.com.cn/  触摸滑动，轮播图。
 
 ### 思考
 

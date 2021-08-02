@@ -89,8 +89,15 @@ DOCTYPE，HTML，HEAD（META，TITLE），BODY。Style，Script。Script标签�
 特征：不是独占一行，从左到右进行排列
 
 1. 图片：image, src, alt 属性的文本是当图片无法加载时显示的替代文本.
+
 2. 锚点：anchor, href跳转，包含页面间跳转（增加target=“_blank”，在新的空白页上打开），页内跳转，固定链接。
+
 3. span
+
+4. ```html
+   //button onclick事件绑定，需要加括号。
+   <button onclick="copyText()">Copy Text</button>
+   ```
 
 #### 表单元素
 
