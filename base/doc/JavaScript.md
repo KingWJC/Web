@@ -43,6 +43,7 @@ document.getElementById('idname');//按照id查找，拿到的是一个标签对
 document.getElementsByClassName('classname');//按照class标签去找，得到的是一个数组里存放的标签
 document.getElementsByTagName('tagname');//通过标签名去找，拿到的也是一个数组
 document.getElementsByName('yuan'); //按照name属性去找,拿到的也是一个数组
+document.querySelector(""); //Returns the first element that is a descendant of node that matches selectors.
 //导航查找节点，通过某一个标签的位置去查找另一个标签
 parentElement           // 父节点标签元素
 children                // 所有子标签
