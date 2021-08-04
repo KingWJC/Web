@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue 基础用法</title>
+    <script src="js/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{text + (number+1)}}</p>
+        <p>Using v-html directive:<span v-html="html"></span></p>
+        <button v-bind:disabled="isFlag" :[key]="showInfo" style="width:50px; height: 25px;">bindAttr</button>
+        <ul>
+            <li v-show="showInfo==='cat1'">吃饭</li>
+            <li v-show="showInfo==='cat1'">睡觉</li>
+            <li v-show="showInfo==='cat2'">打豆豆</li>
+        </ul>
+        <button v-on:click="displayli('cat1')">onCat1</button>
+        <button @click="displayli('cat2')">onCat2</button>
+        <p>your sex is :
+            <span v-if="sex===0">male</span>
+            <span v-else-if="sex===1">female</span>
+            <span v-else>none</span>
+        </p>
+        <ul>
+            <li is="todo-item" v-for="(item,index) in items" :key="item.id" v-bind:title="item.message"
+                v-on:remove="items.splice(index,1)"></li>
+        </ul>
+        <p>
+            <label for="new-todo">Add a todo</label>
+            <input id="new-todo" type="text" v-model="item" placeholder="E.g. Feed the cat">
+            <button @click="addItem()">add</button></p>
+    </div>
+    </div>
+
+</html>
+<script>
+    Vue.component("todo-item", {
+        template: '\
+    <li>\
+      {{ title }}\
+      <button v-on:click="$emit(\'remove\')">Remove</button>\
+    </li>\
+  ',
+        props: ['title']
+    })
+
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            number: 10,
+            text: "wjc",
+            html: "<span style='color:red'>this should be red</span>",
+            isFlag: false,
+            key: "name",
+            showInfo: "cat2",
+            sex: 0,
+            item: "",
+            items: [{
+                id: 1,
+                message: "eat a egg"
+            }, {
+                id: 2,
+                message: "drink tea"
+            }]
+        },
+        methods: {
+            displayli: function (data) {
+                this.showInfo = data;
+            },
+
+            addItem() {
+                this.items.push({
+                    message: this.item
+                });
+                vm.item = "";
+            }
+        }
+    })
+</script>
