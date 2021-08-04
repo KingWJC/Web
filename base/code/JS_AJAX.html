@@ -11,8 +11,8 @@
 </head>
 
 <body>
-    <h1>����γ��ص����AJAX����</h1>
-    <button>ԭ��AJAX����</button>
+    <h1>今天课程重点就是AJAX技术</h1>
+    <button>原生AJAX请求</button>
     <button>JQuery-Get</button>
     <button>JQuery-Post</button>
     <button>JQuery-AJAX</button>
@@ -21,21 +21,21 @@
 <script>
     var h1 = document.querySelector("h1");
     var btn = document.querySelector("button");
-    //������ť������������
+    //单击按钮发起上行请求
     btn.onclick = function () {
-        //���ķ�����������
+        //悄悄发起上行请求
         if (window.XMLHttpRequest) {
-            //�߼������д��
+            //高级浏览器写法
             var xhr = new XMLHttpRequest();
         } else {
-            //IE�Ͱ汾д��
+            //IE低版本写法
             var xhr = new ActiveXObject("msxml2.0xmlhttp");
         }
-        //��������ʽ
+        //设置请求方式
         xhr.open("get", "./data.txt", true);
-        //��������
+        //发送请求
         xhr.send();
-        //��������״̬
+        //监听就绪状态
         xhr.onreadystatechange = function () {
             if (xhr.status === 200 && xhr.readyState === 4) {
                 h1.innerHTML = xhr.responseText;
@@ -44,9 +44,9 @@
     }
 
     $("button").eq(1).onclick = function () {
-        //��һ����������������������ַ
-        //�ڶ�������:�ͻ�����������˶��⴫��һЩ����(���п���)
-        //����������������������Ӧ���ݳɹ���ʱ�������ִ��һ��
+        //第一个参数向向服务器端请求地址
+        //第二个参数:客户端向服务器端额外传递一些数据(可有可无)
+        //第三个参数：当服务器响应数据成功的时候会立即执行一次
         $.get("./data.txt",
             {
                 "name": "wjc",
