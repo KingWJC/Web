@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>调色板</title>
+
+    <script src="js/vue.min.js"></script>
+    <style>
+        div {
+            margin: auto;
+        }
+
+        p {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div v-bind:style="{width: '300px', height: '300px', background:`rgb(${R},${G},${B})`}"></div>
+        <p>R:<input type="range" min="0" max="255" value="0" v-bind:value="R"
+                v-on:input="R=$event.target.value"><span>{{R}}</span></p>
+        <p>G:<input type="range" min="0" max="255" value="0" v-model="G">{{G}}</p>
+        <p>B:<input type="range" min="0" max="255" value="0" v-model="B">{{B}}</p>
+    </div>
+</body>
+
+</html>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            R: 5,
+            G: 0,
+            B: 0
+        }
+    })
+</script>

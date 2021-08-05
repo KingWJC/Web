@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>axios</title>
+
+    <script src="js/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="item in items">{{item}}</li>
+        </ul>
+
+        <p>
+            Ask a question:
+            <input type="text" v-mode="question">
+        </p>
+        <p>{{answer}}</p>
+    </div>
+</body>
+
+</html>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            items: [],
+            question: "",
+            answer: ""
+        },
+        watch: {
+            question: function (newQuestion, oldQuestion) {
+                console.log(newQuestion);
+                console.log(oldQuestion);
+                this.answer = 'Waiting for you to stop typing...'
+                this.debouncedGetAnswer();
+            }
+        },
+        created: function () {
+            // `_.debounce` 是一个通过 Lodash 限制操作频率的函数。
+            // 在这个例子中，我们希望限制访问 yesno.wtf/api 的频率
+            // AJAX 请求直到用户输入完毕才会发出。想要了解更多关于
+            // `_.debounce` 函数 (及其近亲 `_.throttle`) 的知识，
+            // 请参考：https://lodash.com/docs#debounce
+            this.debouncedGetAnswer = _.debounce(this.getAnswer, 500);
+        },
+        //生命周期函数:实例已经和模板挂在完毕后执行.
+        mounted() {
+            //向服务器拉去数据
+            axios.get("https://yesno.wtf/api").then(function (response) {
+                    this.items = Object.entries(response);
+                }),
+
+                axios.post("https://yesno.wtf/api").then((obj) => {
+                    console.log(obj);
+                })
+        },
+        methods: {
+            getAnswer: function () {
+                if (this.question.indexOf("?") === -1) {
+                    this.answer = "Questions usually contian a question mark."
+                    return
+                }
+                this.answer = 'Thinking.....'
+                var vm1 = this
+                axios.get("https://yesno.wtf/api").then((response) => {
+                        vm1.answer = _capitalize(response.data.answer)
+                    })
+                    .catch(function (error) {
+                        vm1.answer = 'Error! Could not reach  the API. ' + error
+                    })
+
+            }
+        }
+    })
+</script>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微博发布框</title>
+
+    <script src="js/vue.min.js"></script>
+    <style>
+        textarea {
+            margin-left: 600px;
+        }
+
+        p {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <textarea rows="20" cols="60" v-model="msg"></textarea><span>{{msg.length}}/140字</span>
+        <p>
+            <button :disabled="msg.length==0||msg.length>140">发布</button>
+            <button @click="clear">清除</button>
+        </p>
+    </div>
+</body>
+
+</html>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            msg: ''
+        },
+        methods: {
+            clear: function () {
+                this.msg = "";
+            }
+        }
+    })
+</script>

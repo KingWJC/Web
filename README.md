@@ -37,6 +37,10 @@ https://threejs.org/  3D效果
 
 https://www.swiper.com.cn/  触摸滑动，轮播图。
 
+### 源码下载
+
+BootCDN：百度静态前端源码文件资源库. https://www.bootcdn.cn/
+
 ### 思考
 
 [https://baike.baidu.com/item/IEEE%20754/3869922?fr=aladdin](https://baike.baidu.com/item/IEEE 754/3869922?fr=aladdin)

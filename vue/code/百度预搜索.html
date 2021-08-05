@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>百度预搜索</title>
+
+    <script src="js/vue.min.js"></script>
+    <style>
+        div {
+            margin: auto;
+        }
+
+        p {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        {{condition}}
+        <h1>请输入要搜索的内容: <input type="text" v-model="condition"></h1>
+        <ul>
+            <li v-for="item in items">{{item.q}}</li>
+        </ul>
+    </div>
+</body>
+
+</html>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            condition: "",
+            items: []
+        },
+        watch: {
+            //函数名字务必和监听属性名字一致
+            condition(data) {
+                var path =
+                    "https://www.baidu.com/sugrec?pre=1&p=3&ie=utf-8&json=1&prod=pc&from=pc_web&sugsid=34302,33966,34335,34369,31660,34331,34004,34073,34281,34094,26350,34245,34090&wd=" +
+                    data +
+                    "&req=2&bs=html%20span%20p&pbs=html%20span%20p&csor=11&pwd=wangjichen&cb=jQuery1102009684849123971118_1628056613932&_=1628056614015";
+
+                //JSONP跨域拉去数据
+                //动态创建script
+                var script = document.createElement("script");
+                script.src = path;
+                document.body.appendChild(script);
+            }
+        }
+    })
+
+    //声明一个同名函数
+    function jQuery1102009684849123971118_1628056613932(data) {
+        //修改vue实例的arr属性值
+        vm.items = data.g;
+    }
+</script>
