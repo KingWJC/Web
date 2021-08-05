@@ -49,6 +49,14 @@ vm.$watch('a', function (newValue, oldValue) {
 
 ### 模板语法
 
+#### 命名
+
+HTML 中的 attribute 名是大小写不敏感的，所以浏览器会把所有大写字符解释为小写字符。
+
+这意味着当你使用 DOM 中的模板时，camelCase (驼峰命名法) 的名称需要使用其等价的 kebab-case (短横线分隔命名) 命名：
+
+如：prop 名，组件名
+
 #### 插值
 
 数据绑定最常见的形式就是使用“Mustache”语法 (双大括号) 的文本插值
@@ -189,6 +197,10 @@ data: {
    由数据劫持结合发布者－订阅者模式实现
 
    ```vue
+   <input v-model="searchText">
+   <!--等价于-->
+   <input v-bind:value="searchText" v-on:input="searchText = $event.target.value"
+   
    <!-- 在“change”时而非“input”时更新 -->
    <input v-model.lazy="msg">
    
@@ -235,27 +247,119 @@ Vue 提供了一种更通用的方式来观察和响应 Vue 实例上的数据�
 
 ### 组件
 
+![image-20210805174837082](images/image-20210805174837082.png)
+
 1. **一个组件的 `data` 选项必须是一个函数**，因此每个实例可以维护一份被返回对象的独立的拷贝
 
 2. 为了能在模板中使用，这些组件必须先注册以便 Vue 能够识别。
 
    这里有两种组件的注册类型：**全局注册**和**局部注册**。
 
-   `Vue.component` 是全局注册
+   `Vue.component` 是全局注册，对象内部conponents{} 是局部注册。
 
-3. 通过 Prop 向子组件传递数据
+3. 组件传值有3种。
 
-4. 每个组件必须只有一个根元素
+   1. 父组件通过 props 向子组件传递数据
 
-5. 通过 `v-on` 监听子组件实例的任意事件
+      所有的 prop 都使得其父子 prop 之间形成了一个**单向下行绑定**：父级 prop 的更新会向下流动到子组件中，每次父级组件发生变更时，子组件中所有的 prop 都将会刷新为最新的值，但是反过来则不行。这样会防止从子组件意外变更父级组件的状态，从而导致你的应用的数据流向难以理解
 
-   子组件可以通过调用内建的 **`$emit`** 方法并传入事件名称来触发一个事件, 
+      两种常见的试图变更一个 prop 的情形：
 
-   还可以使用事件抛出一个值, 父级组件监听这个事件的时候，可以通过 `$event` 访问到被抛出的这个值. 
+      1. **这个子组件接下来希望将其作为一个本地的 prop 数据来使用。**在这种情况下，最好定义一个本地的 data property 并将这个 prop 用作其初始值。
+      2. **这个 prop 以一种原始的值传入且需要进行转换。**在这种情况下，最好使用这个 prop 的值来定义一个计算属性。
+      3. 原因：JavaScript 中对象和数组是通过引用传入的，所以对于一个数组或对象类型的 prop 来说，在子组件中改变变更这个对象或数组本身**将会**影响到父组件的状态。
 
-   或者作为第一个参数传入事件处理函数的方法.
+      类型检查： prop 会在一个组件实例创建**之前**进行验证，所以实例的 property (如 `data`、`computed` 等) 在 `default` 或 `validator` 函数中是不可用的
 
-6. 
+      ```vue
+      Vue.component('my-component', {
+        props: {
+          // 基础的类型检查 (`null` 和 `undefined` 会通过任何类型验证)
+          propA: Number,
+          // 多个可能的类型
+          propB: [String, Number],
+          // 必填的字符串
+          propC: {
+            type: String,
+            required: true
+          },
+          // 带有默认值的数字
+          propD: {
+            type: Number,
+            default: 100
+          },
+          // 带有默认值的对象
+          propE: {
+            type: Object,
+            // 对象或数组默认值必须从一个工厂函数获取
+            default: function () {
+              return { message: 'hello' }
+            }
+          },
+          // 自定义验证函数
+          propF: {
+            validator: function (value) {
+              // 这个值必须匹配下列字符串中的一个
+              return ['success', 'warning', 'danger'].indexOf(value) !== -1
+            }
+          }
+        }
+      })
+      ```
+
+   2. 子组件可以通过调用内建的 **`$emit`** 方法并传入事件名称来触发一个事件, 
+
+      还可以使用事件抛出一个值, 父级组件监听这个事件的时候，可以通过 `$event` 访问到被抛出的这个值. 
+
+      或者作为第一个参数传入事件处理函数的方法.
+
+   3. 兄弟组件之间
+
+4. 组件中非 Prop 的 Attribute
+
+5. 每个组件必须只有一个根元素
+
+6. 组件上使用 v-model
+
+   ```vue
+   <custom-input v-model="searchText"></custom-input>
+   <!--等价于-->
+   <custom-input v-bind:value="searchText" v-on:input="searchText = $event"></custom-input>
+   
+   Vue.component("custom-input",{
+   	props:['value'],
+   	template:
+       '<input\
+         v-bind:value="value"\
+         v-on:input="$emit('input', $event.target.value)"\
+       >'
+   })
+   ```
+
+7. 通过插槽分发内容：slot元素。
+
+8. 动态组件：`is` attribute 
+
+9. 解析DOM模板：有些 HTML 元素，诸如 `<ul>`、`<ol>`、`<table>` 和 `<select>`，对于哪些元素可以出现在其内部是有严格限制的，
+
+   ```vue
+   <table>
+     <blog-post-row></blog-post-row>
+   </table>
+   <!--这个自定义组件 <blog-post-row> 会被作为无效的内容提升到外部，并导致最终渲染结果出错,需改为-->
+   <table>
+     <tr :is="blog-post-row"></tr>
+   </table>
+   ```
+
+   需要注意的是**如果我们从以下来源使用模板的话，这条限制是\*不存在\*的**：
+
+   - 字符串 (例如：`template: '...'`)
+   - 单文件组件(.vue)
+   - 脚本文件<script type='text/x-temlate'>
+
+10. 
+
 
 
 
@@ -266,5 +370,11 @@ Vue 提供了一种更通用的方式来观察和响应 Vue 实例上的数据�
 1. 调色板
 2. 微博发布框
 3. 百度预搜索效果
+4. AJAX技术实现
+5. 
 
 https://www.baidu.com/sugrec?pre=1&p=3&ie=utf-8&json=1&prod=pc&from=pc_web&sugsid=34302,33966,34335,34369,31660,34331,34004,34073,34281,34094,26350,34245,34090&wd=wangjicheng&req=2&bs=html%20span%20p&pbs=html%20span%20p&csor=11&pwd=wangjichen&cb=jQuery1102009684849123971118_1628056613932&_=1628056614015
+
+https://zhuanlan.zhihu.com/p/27678951
+
+https://blog.csdn.net/get_set/article/details/79455258
