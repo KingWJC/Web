@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -21,7 +21,8 @@
         </ul>
         <button v-on:click="displayli('cat1')">onCat1</button>
         <button @click="displayli('cat2')">onCat2</button>
-        <p>your sex is :
+        <p>
+            your sex is :
             <span v-if="sex===0">male</span>
             <span v-else-if="sex===1">female</span>
             <span v-else>none</span>
@@ -33,10 +34,10 @@
         <p>
             <label for="new-todo">Add a todo</label>
             <input id="new-todo" type="text" v-model="item" placeholder="E.g. Feed the cat">
-            <button @click="addItem()">add</button></p>
+            <button @click="addItem()">add</button>
+        </p>
     </div>
-    </div>
-
+</body>
 </html>
 <script>
     Vue.component("todo-item", {
