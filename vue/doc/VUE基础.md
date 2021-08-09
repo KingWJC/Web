@@ -320,17 +320,27 @@ watch函数名要与监听属性一致.
       })
       ```
 
-   2. 子组件可以通过调用内建的 **`$emit`** 方法并传入事件名称来触发一个事件, 
+   2. 子组件可以通过调用内建的 `$emit`方法并传入事件名称来触发一个事件, 
 
       还可以使用事件抛出一个值, 父级组件监听这个事件的时候，可以通过 `$event` 访问到被抛出的这个值. 
 
       或者作为第一个参数传入事件处理函数的方法.
 
-   3. 兄弟组件之间
+   3. 兄弟组件之间，通过中央管道：就是将Vue实例作为原型对象的属性值，然后所有Vue组件都可以使用它（根组件和子组件）来进行事件的监听和触发，实现组件间通信。
 
-4. 组件中非 Prop 的 Attribute
+      ```vue
+      Vue.prototype.$custom = new Vue
+      this.$custom.$on('eventName',($event)=>{ console.log($event) })
+      this.$custom.$emit('eventName',this.info)
+      ```
 
-5. 每个组件必须只有一个根元素
+4. 属性Attribute的继承。
+
+   1. 组件中非 Prop 的 Attribute：是指传向一个组件，但是该组件并没有相应 prop 定义的 attribute，这些 attribute 会被添加到这个组件的根元素上。
+   2. Attribute的替换和合并：大多数attribute，从外部提供给组件的值回替换掉组件内部设置好的值。但class和style的attribute会合并。
+   3. 禁用attribute继承：可以在组件的选项中设置 `inheritAttrs: false`。
+
+5. 每个组件必须只有一个根元素，单个根元素
 
 6. 组件上使用 v-model
 
@@ -370,15 +380,4 @@ watch函数名要与监听属性一致.
    - 字符串 (例如：`template: '...'`)
    - 单文件组件(.vue)
    - 脚本文件<script type='text/x-temlate'>
-
-### axios
-
-定义：是Vue当中经常使用第三方JavaScript函数库，它主要作用是可以向服务器端发起请求。使用axios第三放实现AJAX技术（底层使用promise进行封装）
-
-使用：
-
-1. 下载axios源码方式：BootCDN：https://www.bootcdn.cn/
-2. 直接引用：https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js
-
-问题：跨域实现。
 

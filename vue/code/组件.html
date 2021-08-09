@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie-edge" />
+    <title>components</title>
+
+    <script src="js/vue.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 2px;
+        }
+
+        div {
+            border-bottom: 4px solid red;
+        }
+
+        #app {
+            position: relative;
+        }
+
+        ul {
+            position: absolute;
+            width: 100%;
+            height: 100px;
+            list-style: none;
+        }
+
+            ul li {
+                float: left;
+                padding: 10px;
+            }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h3>
+            父组件的值：{{info}},initialCount:{{initialCount}},initialArr: {{initialArr.length}}
+        </h3>
+        <!--当你使用 DOM 中的模板时，camelCase (驼峰命名法) 的 prop 名 initialContent
+        需要使用其等价的 kebab-case (短横线分隔命名) 命名 initial-content
+        使用字符串模板，那么这个限制就不存在了-->
+        <part-blog initial-content="Wang Jicheng" post-title="first part blog"></part-blog>
+        <!-- 给 prop 传入一个静态的值 -->
+        <part-blog initial-content="Wang Yan" post-title="second part blog"></part-blog>
+        <ul>
+            <li :style="{fontSize: blogFontSize+'em' }">
+                <!-- prop 可以通过 v-bind 动态赋值 -->
+                <global-blog v-for="blog in post"
+                             v-bind:key="blog.id"
+                             v-bind:post="blog"
+                             v-bind:initial-count="initialCount"
+                             v-bind:initial-arr="initialArr"
+                             v-on:encharge-text="onEnchargeText">
+                    <!--父组件通过 v-on 监听子组件实例的任意事件，并实现处理函数: blogFontSize += $event-->
+                </global-blog>
+            </li>
+        </ul>
+    </div>
+    <template id="global-blog">
+        <div>
+            <h3>{{info}}-{{post.title}}</h3>
+            <!--子组件可以通过调用内建的 $emit 方法并传入事件名称来触发一个事件-->
+            <button v-on:click="$emit('encharge-text',0.1)">Enlarge text</button>
+            <!--对象和数组是通过引用传入的，所以对于一个数组或对象类型的 prop 来说，
+            在子组件中改变变更这个对象或数组本身将会影响到父组件的状态-->
+            <button v-on:click="initialCount++">修改父组件的传值initialCount: {{count}},{{initialCount}}</button>
+            <button v-on:click="arr.pop()">修改父组件的传值initialArr: {{arr.length}},{{initialArr.length}}</button>
+            <div v-html="post.content"></div>
+        </div>
+    </template>
+</body>
+</html>
+<script>
+    Vue.component('global-blog', {
+        //基础的类型检查(`null` 和 `undefined` 会通过任何类型验证)
+        props: {
+            initialCount: Number,
+            initialArr: [String, Number, Object], //多个可能的类型
+            post: {
+                type: Object,
+                required: true,
+                default: function () {
+                    return {title:'default',content:'empty'}
+                },
+                validator: function (value) {
+                    return [{ title: 'My journey with Vue', content: 'It is a first blog!' }, { title: 'Blogging with Vue', content: 'warning' }].indexOf(value)!==-1
+                }
+            }
+        },
+        //一个组件的 `data` 选项必须是一个函数
+        data() {
+            return {
+                info: '我是全局组件',
+                //子组件内不可以直接改变props，需要定义新的变量引用。
+                count: this.initialCount,
+                arr: this.initialArr,
+            }
+        },
+        template: "#global-blog",
+        mounted() {
+            this.$brother.$on('sendInfo', ($event) => {
+                this.info += $event;
+            })
+        }
+    })
+
+    Vue.prototype.$brother = new Vue
+
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            info: '我是父组件',
+            initialCount:100,
+            initialArr:['wang','ji','cheng'],
+            post: [
+                { id: 1, title: 'My journey with Vue',content:'It is a first blog!' },
+                {
+                    id: 2, title: 'Blogging with Vue', content:'It is a sceond blog!' },
+                {
+                    id: 3, title: 'Why Vue is so fun', content: 'It is a third blog!'
+                }],
+            blogFontSize:1
+        },
+        methods: {
+            onEnchargeText(enlargeAmount) {
+                //使用变量，必须加this
+                this.blogFontSize += enlargeAmount;
+            }
+        },
+        components: {
+            'part-blog': {
+                props: ['initialContent', 'postTitle'],
+                // 如果prop 以一种原始的值传入且需要进行转换，最好定义一个计算属性。
+                computed: {
+                    normalizedContent: function () {
+                        return this.initialContent.trim().toLowerCase()
+                    }
+                },
+                //一个组件的 `data` 选项必须是一个函数
+                data: function () {
+                    return {
+                        info: '我是局部组件',
+                        count:0
+                    }
+                },
+                methods: {
+                    sendInfo() {
+                        this.$brother.$emit("sendInfo", this.info)
+                    }
+                },
+                template: '\
+                    <div>\
+                        <h4> {{ info }}</h4>\
+                        <p>传入的postTitle:{{ postTitle }},content: {{normalizedContent}}</p>\
+                        <button v-on:click="count++">单击次数：{{count}}</button>\
+                        <button @click="sendInfo">传值给全局兄弟组件}</button>\
+                    </div> '
+            }
+        }
+    })
+</script>
