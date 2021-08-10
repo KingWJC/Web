@@ -101,12 +101,14 @@
         },
         template: "#global-blog",
         mounted() {
+            //监听兄弟组件的事件
             this.$brother.$on('sendInfo', ($event) => {
                 this.info += $event;
             })
         }
     })
 
+    //中央管道：就是将Vue实例作为原型对象的属性值，然后所有Vue组件都可以使用它（根组件和子组件）
     Vue.prototype.$brother = new Vue
 
     var vm = new Vue({
@@ -148,6 +150,7 @@
                 },
                 methods: {
                     sendInfo() {
+                        //触发兄弟组件的事件，并传值。
                         this.$brother.$emit("sendInfo", this.info)
                     }
                 },

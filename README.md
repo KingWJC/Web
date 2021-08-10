@@ -37,6 +37,8 @@ https://threejs.org/  3D效果
 
 https://www.swiper.com.cn/  触摸滑动，轮播图。
 
+https://www.aicoder.com/vue/preview/all.html#1 VUE2.0基础教程
+
 ### 源码下载
 
 BootCDN：百度静态前端源码文件资源库. https://www.bootcdn.cn/
