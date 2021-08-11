@@ -39,6 +39,15 @@ https://www.swiper.com.cn/  触摸滑动，轮播图。
 
 https://www.aicoder.com/vue/preview/all.html#1 VUE2.0基础教程
 
+JavaScript教程(JavaScript教程 - 廖雪峰的官方网站 (liaoxuefeng.com))
+
+### 推荐书籍
+
+- 《JavaScript DOM 编程艺术》
+- 《JavaScript权威指南》（犀牛书）
+- 《深入浅出Node》
+- 《HTTP权威指南》
+
 ### 源码下载
 
 BootCDN：百度静态前端源码文件资源库. https://www.bootcdn.cn/
