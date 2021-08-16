@@ -22,8 +22,6 @@
 
 <body>
     <canvas>
-        <ul>123</ul>
-        <li>1213223</li>
     </canvas>
 </body>
 
@@ -33,7 +31,9 @@
     var canvas = document.querySelector("canvas");
     //画布当中任何操作必须通过2D上下文进行操作
     var ctx = canvas.getContext("2d");
+
     //一定要注意：画布当中任何操作都是通过ctx属性、方法进行操作
+    
     //设置矩形填充颜色
     ctx.fillStyle = "cyan";
     //绘制矩形
@@ -51,7 +51,6 @@
     //边框设置
     ctx.lineWidth = 20;
     ctx.strokeStyle = "pink";
-
     //开始绘制
     ctx.stroke();
 </script>
