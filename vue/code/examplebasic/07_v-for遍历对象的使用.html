@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="(item,key,index) in obj" :key="index">{{index}}-{{key}}:{{item}}</li>
+        </ul>
+    </div>
+    <script src = "js/vue.js"></script>
+    <script>
+        var vue = new Vue({
+            el: "#app",
+            data: {
+                obj:{
+                    name: '小明',
+                    age: '17岁',
+                    height: '175cm',
+                    sex: '男',
+                    hobby: '打篮球'
+                }
+            }
+        })
+    </script>
+</body>
+</html>

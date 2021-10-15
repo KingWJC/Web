@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <h2>{{boo}}</h2>
+        <p v-if='boo >= 0 && boo <= 5'>我是5</p>
+        <p v-else-if='boo >= 6 && boo <= 10'>我是10</p>
+        <p v-else-if='boo >= 11 && boo <= 15'>我是15</p>
+        <p v-else-if='boo >= 16 && boo <= 20'>我是20</p>
+        <p v-else="boo > 20">我是大于20</p>
+        <button @click="add">按我加1</button>
+        
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        var vue = new Vue({
+            el: '#app',
+            data:{
+                boo: 0
+            },
+            methods:{
+                add(){
+                    this.boo++
+                }
+            }
+        })
+    </script>
+</body>
+</html>

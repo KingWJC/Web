@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <h1>{{a}}</h1>
+        <button @click="add">按我加1</button>
+        <button @click="minus">按我减1</button>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        new Vue({
+            // 挂载点
+            el:'#app',
+            // 数据
+            data:{
+                a: 0
+            },
+            // 方法
+            methods: {
+                add() {
+                    this.a++
+                },
+                minus() {
+                    this.a--
+                }
+            },
+        })
+    </script>
+</body>
+</html>

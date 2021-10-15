@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <p v-show='boo >= 5'>我是5</p>
+        <button @click="add">按我加1</button>
+        
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        var vue = new Vue({
+            el: '#app',
+            data:{
+                boo: 0
+            },
+            methods:{
+                add(){
+                    this.boo++
+                }
+            }
+        })
+    </script>
+</body>
+</html>

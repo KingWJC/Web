@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div id="app">
+        <p >{{a}}</p>
+        <button @click.once="add">按我加1</button>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        var vue = new Vue({
+            el:"#app",
+            data:{
+                a: 100
+            },
+            methods:{
+                add(event) {
+                    this.a++
+                    console.log(this.a)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

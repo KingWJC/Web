@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table,td,th{
+            border: 1px solid #111;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <table>
+            <tr>
+                <th>姓名</th>
+                <th>年龄</th>
+                <th>性别</th>
+                <th>身高</th>
+            </tr>
+            <tr v-for="(item,index) in arr">
+                <!-- JOSN中的姓名 -->
+                <td>{{item.name}}</td>
+                <!-- JOSN中的年龄 -->
+                <td>{{item.age}}</td>
+                <!-- JOSN中的性别 -->
+                <td>{{item.sex}}</td>
+                <!-- JOSN中的身高 -->
+                <td>{{item.height}}</td>
+            </tr>
+        </table>
+    </div>
+    <script src = "js/vue.js"></script>
+    <script>
+        var vue = new Vue({
+            el: "#app",
+            data: {
+                arr: [
+                    {name:'小明',age: '17',sex:'男',height: '168'},
+                    {name:'小红',age: '18',sex:'女',height: '165'},
+                    {name:'小周',age: '19',sex:'男',height: '178'},
+                    {name:'小刚',age: '20',sex:'男',height: '167'}
+                ]
+            }
+        })
+    </script>
+</body>
+</html>

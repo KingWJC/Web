@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div id="app" v-clock>
+        <div>
+            <img :src="'images/'+url+'.jpg'" alt="">
+        </div>
+        <button @click="add">点击加1</button>
+        <button @click="minus">点击减1</button>
+    </div>
+    <script src = "js/vue.js"></script>
+    <script>
+        var vue = new Vue({
+            el: "#app",
+            data: {
+                url: 0
+            },
+            methods:{
+                add(event) {
+                    this.url ++
+                    if(this.url >= 5) {
+                        this.url = 0;
+                    }
+                },
+                minus(){
+                    
+                    if(this.url <= 0) {
+                        this.url = 5;
+                    }
+                    this.url --
+                }
+            }
+        })
+    </script>
+</body>
+</html>

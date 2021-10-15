@@ -2,7 +2,7 @@
  * @Author: KingWJC
  * @Date: 2021-08-09 16:29:08
  * @LastEditors: KingWJC
- * @LastEditTime: 2021-08-09 18:24:23
+ * @LastEditTime: 2021-10-15 17:26:30
  * @Descripttion:
  * @FilePath: \projectSimple\src\App.vue
 -->
@@ -33,7 +33,8 @@ export default {
       menuList: [
         { id: 1, name: '首页', url: '/home' },
         { id: 2, name: '用户', url: '/user/19' },
-        { id: 3, name: '产品', url: '/product/20' }
+        { id: 3, name: '产品', url: '/product/20' },
+        { id: 4, name: '商城评论', url: '/Comment' }
       ]
     }
   }

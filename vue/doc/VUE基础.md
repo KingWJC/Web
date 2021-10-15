@@ -19,6 +19,12 @@ VUE是一套用于构建用户界面的渐进式（JavaScript）框架，
 
 ![img](http://images2017.cnblogs.com/blog/1201942/201802/1201942-20180206192837982-1983432333.png)
 
+当与现代化的工具链以及各种支持类库结合使用时，Vue 也完全能够为复杂的单页应用提供驱动
+
+实际上vue框架就是一个MVVM框架,它是初创公司的首选框架，它是轻量级的，有很多根据Vue拓展的独立的功能或库
+
+![img](images/clip_image002.jpg)
+
 ### 基础使用
 
 响应式；一个 Vue 应用会将其挂载到一个 DOM 元素上 (对于这个例子是 `#app`) 然后对其进行完全控制。那个 HTML 是我们的入口，但其余都会发生在新创建的 Vue 实例内部。数据和 DOM 已经被建立了关联，所有东西都是**响应式的**
@@ -48,16 +54,6 @@ vm.$watch('a', function (newValue, oldValue) {
 })
 ```
 
-### 生命周期
-
-每个 Vue 实例在被创建时都要经过一系列的初始化过程——例如，需要设置数据监听、编译模板、将实例挂载到 DOM 并在数据变化时更新 DOM 等。同时在这个过程中也会运行一些叫做**生命周期钩子**的函数.
-
-生命周期钩子的 `this` 上下文指向调用它的 Vue 实例.
-
-不要在选项 property 或回调上使用[箭头函数](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Arrow_functions)，比如 `created: () => console.log(this.a)` 或 `vm.$watch('a', newValue => this.myMethod())`。因为箭头函数并没有 `this`，`this` 会作为变量一直向上级词法作用域查找，直至找到为止，经常导致 `Uncaught TypeError: Cannot read property of undefined` 或 `Uncaught TypeError: this.myMethod is not a function` 之类的错误。
-
-![Vue 实例生命周期](images/lifecycle.png)
-
 ### 模板语法
 
 #### 命名
@@ -70,71 +66,19 @@ HTML 中的 attribute 名是大小写不敏感的，所以浏览器会把所有�
 
 #### 插值
 
-数据绑定最常见的形式就是使用“Mustache”语法 (双大括号) 的文本插值
-
-适用于: 文本，HTML， Attribute(Class和Style的绑定)，JavaScript 表达式
-
-v-html,  v-text,  v-bind:.
-
-绑定 HTML Class模板: 
-
-```vue
-<!--绑定 HTML Class模板-->
-<div> class="static" v-bind:class="{active: isActive, 'text-danger':hasError}" </div>
-data: {
-  isActive: true,
-  hasError: false
-}
-<!--绑定的数据对象不必内联定义在模板里-->
-<div v-bind:class="classObject"></div>
-data: {
-  classObject: {
-    active: true,
-    'text-danger': false
-  }
-}
-<!--绑定一个返回对象的计算属性-->
-data: {
-  isActive: true,
-  error: null
-},
-computed: {
-  classObject: function () {
-    return {
-      active: this.isActive && !this.error,
-      'text-danger': this.error && this.error.type === 'fatal'
-    }
-  }
-}
-<!--数组语法-->
-<div v-bind:class="[activeClass, errorClass]"></div>
-data: {
-  activeClass: 'active',
-  errorClass: 'text-danger'
-}
-```
-
-绑定内联样式
-
-```vue
-<div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }"></div>
-<!--直接绑定到一个样式对象-->
-<div v-bind:style="styleObject"></div>
-<!--数组语法-->
-<div v-bind:style="[baseStyles, overridingStyles]"></div>
-<!--多重值,只会渲染数组中最后一个被浏览器支持的值-->
-<div :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }"></div>
-```
+数据绑定最常见的形式就是使用“Mustache”语法 (双大括号) 的文本插值，内部也可以存放表达式，表达式支持简单，比如简单判断，比如三元表达式，不可以使用if等等复杂判断
 
 #### 指令
+
+指令的英文：directive，vue指令的作用是通过带有v-的特殊属性，实现对dom的响应式加载
 
 职责是，当表达式的值改变时，将其产生的连带影响，响应式地作用于 DOM
 
 1. 根据条件展示: v-show, 
 
-    有更高的初始渲染开销, 需要非常频繁地切换
+   有更高的初始渲染开销, 需要非常频繁地切换
 
-   有 `v-show` 的元素始终会被渲染并保留在 DOM 中。`v-show` 只是简单地切换元素的 CSS property `display`.
+   有 `v-show` 的元素始终会被渲染并保留在 DOM 中。`v-show` 只是简单地切换元素的 CSS property `display`.对元素的显示和隐藏进行逻辑判断，并没有实现元素的下树
 
 2. 条件渲染:v-if,  
 
@@ -144,75 +88,153 @@ data: {
 
    用 `key` 管理可复用的元素, 让元素从头开始渲染. 
 
+   显示根本原理：一个是通过对值的隐式转换，一个就是通过对表达式的判断得出的布尔值得来的
+
+   v-show和v-if的使用场景区分：如果页面切换的特别频繁使用v-show，如果页面的涉及范围特别大并且不是特别频繁的切换使用v-if，因为主要区分是涉及到页面的加载性能。
+
 3. 列表渲染:v-for,  
 
-   对象的属性, 数组的元素. 
+   作用是遍历数组（对象）的每一个值. 
 
    提供额外的二个的参数name键名,index索引.
 
-4. Key是 Vue 识别节点的一个通用机制, 用来维护元素的状态.
+   数组的元素: \<li v-for="(item,index) in arr" :key="index">{{index}}-{{item}}</li>
+
+   对象的属性: \<li v-for="(item,key,index) in obj" :key="index">{{index}}-{{key}}:{{item}}</li>
+
+   index指的是每一项被遍历的值的下标索引值
+
+   key是用来给每一项值加元素标识(对象属性名)，作用是为了区分元素，为了实现最小量的更新
+
+   Key是 Vue 识别节点的一个通用机制, 用来维护元素的状态.
    1. 默认使用“就地更新”的策略。如果数据项的顺序被改变，Vue 将不会移动 DOM 元素来匹配数据项的顺序，而是就地更新每个元素，并且确保它们在每个索引位置正确渲染.
    2. 这个默认的模式是高效的，但是**只适用于不依赖子组件状态或临时 DOM 状态 (例如：表单输入值) 的列表渲染输出**。
    3. 为了给 Vue 一个提示，以便它能跟踪每个节点的身份，从而重用和重新排序现有元素，你需要为每项提供一个唯一 `key` attribute.
    4. 建议尽可能在使用 `v-for` 时提供 `key` attribute，除非遍历输出的 DOM 内容非常简单，或者是刻意依赖默认行为以获取性能上的提升。
 
-5. 事件处理: v-on(@),  
+4. 渲染文本：v-html,  v-text,
 
-   监听 DOM 事件,并在触发时运行一些 JavaScript 代码.
+   渲染方法：双大括号插值：{{}}，v-text， v-html
+
+   双大括号和v-text渲染结果类似，都是会以文本类型进行渲染。
+
+   区别：
+
+   双大括号在渲染结果之前，会有编译之前的文本显示，v-text是没有这种现象的
+
+   双大括号更灵活，中间是可以添加内容的，v-text是只能渲染data中的数据，中间不允许插入内容
+
+   v-html的渲染方式，会识别html模板。不允许在标签元素(如p)中间随意插值
+
+5. v-cloak
+
+   作用是在vue实例渲染后关联结果。
+
+   双大括号插值语法在遇到网络延迟的时候会显示编译之前的文本。
+
+   使用v-cloak结合CSS解决双大括号渲染：[v-cloak]css选择器选择的是html结构中有v-cloak的属性，有这个属性的元素设置display为none，又由于v-cloak这个属性在vue的实例加载完之后关联结束，所以修改这个元素的隐藏状态，元素就会显示，这样造成的结果就是要么空白，要么显示编译后的文本。
+
+6. v-once
+
+   作用是只会渲染对应元素一次，数据更新不会引起视图的更新
+
+   目的是为了优化页面的性能
+
+7. v-pre
+
+   属性的作用是跳过该元素编译过程，直接显示元素内部的文本，特点就是跳过大量的没有指令的节点。
+
+   浏览器显示的就是没有编译之前的h2元素中的文本内容，v-pre属性的有点就是优化页面的加载性能
+
+8. 事件处理: v-on(@),  
+
+   作用是给元素添加事件监听，可以简写为@，监听 DOM 事件,并在触发时运行一些 JavaScript 代码.
+
+   替代原生的JavaScript的事件方法，一律去除on，如onmouseleave
 
    调用的方法名, 或内联 JavaScript 语句中调用方法.
 
+   必须写在vue的methods中，不允许在外部罗列方法名称，
+
+   原生的JavaScript的事件方法是不能和vue混用的，
+
+   同名方法会有覆盖情况，后写方法会覆盖先写的方法
+
    在内联语句处理器中, 传入特殊变量 `$event`,访问原始的 DOM 原生事件对象.
 
-6. 事件修饰符
+   如果方法中没有传入值，默认输入会有该方法的事件参数
 
-   替代调用 `event.preventDefault()` 或 `event.stopPropagation()` 等.
+9. v-bind
 
-   方法只有纯粹的数据逻辑，而不是去处理 DOM 事件细节. Vue.js 为 `v-on` 提供了**事件修饰符**
+   属性的作用是将普通的w3c属性变为动态属性，让属性具有动态能力
+
+   适用于: 文本，HTML， Attribute(Class和Style的绑定)，JavaScript 表达式
+
+   style属性和class属性有特殊性，如果需要使用动态传值，必须传入一个object对象.
+
+   绑定 HTML Class模板: 
 
    ```vue
-   <!-- 阻止单击事件继续传播 -->
-   <a v-on:click.stop="doThis"></a>
-   
-   <!-- 提交事件不再重载页面 -->
-   <form v-on:submit.prevent="onSubmit"></form>
-   
-   <!-- 添加事件监听器时使用事件捕获模式 -->
-   <!-- 即内部元素触发的事件先在此处理，然后才交由内部元素进行处理 -->
-   <div v-on:click.capture="doThis">...</div>
-   
-   <!-- 只当在 event.target 是当前元素自身时触发处理函数 -->
-   <!-- 即事件不是从内部元素触发的 -->
-   <div v-on:click.self="doThat">...</div>
-   
-   <!-- 点击事件将只会触发一次 -->
-   <a v-on:click.once="doThis"></a>
-   
-   <!-- 滚动事件的默认行为 (即滚动行为) 将会立即触发 -->
-   <!-- 而不会等待 `onScroll` 完成 ,对应 addEventListener 中的 passive 选项-->
-   <!-- 这其中包含 `event.preventDefault()` 的情况 -->
-   <div v-on:scroll.passive="onScroll">...</div>
-   
-   <!-- 按键修饰符, 只有在 `key` 是 `Enter` 时调用 `vm.submit()` -->
-   <input v-on:keyup.enter="submit">
+   <!--绑定 HTML Class模板-->
+   <div> class="static" v-bind:class="{active: isActive, 'text-danger':hasError}" </div>
+   data: {
+     isActive: true,
+     hasError: false
+   }
+   <!--绑定的数据对象不必内联定义在模板里-->
+   <div v-bind:class="classObject"></div>
+   data: {
+     classObject: {
+       active: true,
+       'text-danger': false
+     }
+   }
+   <!--绑定一个返回对象的计算属性-->
+   data: {
+     isActive: true,
+     error: null
+   },
+   computed: {
+     classObject: function () {
+       return {
+         active: this.isActive && !this.error,
+         'text-danger': this.error && this.error.type === 'fatal'
+       }
+     }
+   }
+   <!--数组语法-->
+   <div v-bind:class="[activeClass, errorClass]"></div>
+   data: {
+     activeClass: 'active',
+     errorClass: 'text-danger'
+   }
    ```
 
-   用 `v-on:click.prevent.self` 会阻止**所有的点击**，
+   绑定内联样式
 
-   而 `v-on:click.self.prevent` 只会阻止对元素自身的点击。
+   ```vue
+   <div v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }"></div>
+   <!--直接绑定到一个样式对象-->
+   <div v-bind:style="styleObject"></div>
+   <!--数组语法-->
+   <div v-bind:style="[baseStyles, overridingStyles]"></div>
+   <!--多重值,只会渲染数组中最后一个被浏览器支持的值-->
+   <div :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }"></div>
+   ```
 
-   `.passive` 修饰符尤其能够提升移动端的性能
-
-7. 表单输入绑定：v-model，
+10. 表单输入绑定：v-model，
 
    由数据劫持结合发布者－订阅者模式实现
+
+   v使用在表单元素中的，作用是实现表单和数据的双向绑定
 
    ```vue
    <input v-model="searchText">
    <!--等价于-->
    <input v-bind:value="searchText" v-on:input="searchText = $event.target.value"
    
-   <!-- 在“change”时而非“input”时更新 -->
+   <!-- 表单修饰符都是用来修饰v-model属性的,分别是.lazy，.number，.trim-->
+   <!-- 在“change”时而非“input”时更新,将输入框的数据绑定v-model从实时监听的状态变为change状态 -->
    <input v-model.lazy="msg">
    
    <!-- 自动将用户的输入值转为数值类型 -->
@@ -222,162 +244,74 @@ data: {
    <input v-model.trim="msg">
    ```
 
-### 计算属性
+#### 修饰符
 
-computed: 对于任何复杂逻辑，你都应当使用**计算属性**.
+替代调用 `event.preventDefault()` 或 `event.stopPropagation()` 等.
 
-**它是基于它们的响应式依赖进行缓存的**。只在相关响应式依赖发生改变时它们才会重新求值。这就意味着只要 `message` 还没有发生改变，多次访问 `reversedMessage` 计算属性会立即返回之前的计算结果，而不必再次执行函数.
+方法只有纯粹的数据逻辑，而不是去处理 DOM 事件细节. Vue.js 为 `v-on` 提供了**事件修饰符**
 
-计算属性默认只有 getter，不过在需要时你也可以提供一个 setter：
+```vue
+<!-- 阻止单击事件继续传播(冒泡),类似原生JavaScript的event.stopPropagation()方法-->
+<a v-on:click.stop="doThis"></a>
 
-```javascript
-computed: {
-  fullName: {
-    // getter
-    get: function () {
-      return this.firstName + ' ' + this.lastName
-    },
-    // setter
-    set: function (newValue) {
-      var names = newValue.split(' ')
-      this.firstName = names[0]
-      this.lastName = names[names.length - 1]
-    }
-  }
-}
-//现在再运行 vm.fullName = 'John Doe' 时，setter 会被调用，vm.firstName 和 vm.lastName 也会相应地被更新
+<!-- 作用是阻止标签元素的默认事件 原生：event.preventDefault()-->
+<!-- 提交事件不再重载页面 -->
+<form v-on:submit.prevent="onSubmit"></form
+<!-- 不会执行a标签的默认的跳转事件 -->
+<a href="http://www.baidu.com" @click.prevent="alertDialog">点击跳转到百度</a>
+
+<!-- 添加事件监听器时使用事件捕获模式 -->
+<!-- 即内部元素触发的事件先在此处理，然后才交由内部元素进行处理 -->
+<!-- vue的事件监听，默认都是获取冒泡阶段的，所以使用capture去监听捕获阶段的事件,结果为:外层-中间-内层-->
+<div class="outer" @click.capture="outer">
+    <div class="center" @click.capture="center">
+        <div class="inner" @click="inner"></div>
+    </div>
+</div>
+
+<!-- 只当在 event.target 是当前元素自身时触发处理函数，即事件不是从内部元素触发的, -->
+<!-- 作用是只有点击元素本身的时候才能触发事件，不接受冒泡上来的事件，同时也不能阻止事件的冒泡 -->
+<div v-on:click.self="doThat">...</div>
+
+<!-- 点击事件将只会触发一次 -->
+<a v-on:click.once="doThis"></a>
+
+<!-- 滚动事件的默认行为 (即滚动行为) 将会立即触发 -->
+<!-- 而不会等待 `onScroll` 完成 ,对应 addEventListener 中的 passive 选项-->
+<!-- 这其中包含 `event.preventDefault()` 的情况 -->
+<div v-on:scroll.passive="onScroll">...</div>
+
+<!-- 按键修饰符, 只有在 `key` 是 `Enter`（空格） 时调用 `vm.submit()` -->
+<input v-on:keyup.enter="submit">
+<input type="text" @keyup.32='add'>
+    
+<!-- 鼠标按键修饰符修饰的是鼠标的左、滚轮、右键 -->
+<!-- 结合prevent修饰符实现右键的事件监听，prevent必须在right后 -->
+<button  @click.right.prevent='add'>按我加1 </button>
+    
+<!-- 系统修饰符,通过一些指定的按键配合鼠标点击或者键盘事件进行事件监听,如ctrl,alt,shfit,meta徽标键,Command苹果键-->
+<!-- 此时按住键盘ctrl键然后鼠标点击才能实现add加1 -->
+<button  @click.ctrl='add'>按我加1 </button>
 ```
 
-### 侦听器
+1. 用 `v-on:click.prevent.self` 会阻止**所有的点击**，
 
-Vue 提供了一种更通用的方式来观察和响应 Vue 实例上的数据变动：**侦听属性**, 当需要在数据变化时执行异步或开销较大的操作时，这个方式是最有用的. 
+2. 而 `v-on:click.self.prevent` 只会阻止对元素自身的点击。
 
-使用 `watch` 选项允许我们执行异步操作 (访问一个 API)，限制我们执行该操作的频率，并在我们得到最终结果前，设置中间状态。这些都是计算属性无法做到的.
+3. `.passive` 修饰符尤其能够提升移动端的性能
 
-但其它情况下, 通常更好的做法是使用计算属性而不是命令式的 `watch` 回调.
+常用的keyCode别名
 
-watch函数名要与监听属性一致.
+| keyCode值 | 别名    | 键盘按键            |
+| --------- | ------- | ------------------- |
+| 13        | .enter  | 回车                |
+| 32        | .space  | 空格                |
+| 37        | .left   | 键盘左键            |
+| 38        | .up     | 键盘上键            |
+| 39        | .right  | 键盘右键            |
+| 40        | .down   | 键盘下键            |
+| 9         | .tab    | 键盘tab             |
+| 46或者8   | .delete | delete或者backspace |
 
-### 组件
 
-![image-20210805174837082](images/image-20210805174837082.png)
-
-1. **一个组件的 `data` 选项必须是一个函数**，因此每个实例可以维护一份被返回对象的独立的拷贝
-
-2. 为了能在模板中使用，这些组件必须先注册以便 Vue 能够识别。
-
-   这里有两种组件的注册类型：**全局注册**和**局部注册**。
-
-   `Vue.component` 是全局注册，对象内部conponents{} 是局部注册。
-
-3. 组件传值有3种。
-
-   1. 父组件通过 props 向子组件传递数据
-
-      **单向数据流**：所有的 prop 都使得其父子 prop 之间形成了一个**单向下行绑定**：父级 prop 的更新会向下流动到子组件中，每次父级组件发生变更时，子组件中所有的 prop 都将会刷新为最新的值，但是反过来则不行。这样会防止从子组件意外变更父级组件的状态，从而导致你的应用的数据流向难以理解
-
-      两种常见的试图变更一个 prop 的情形：
-
-      1. **这个子组件接下来希望将其作为一个本地的 prop 数据来使用。**在这种情况下，最好定义一个本地的 data property 并将这个 prop 用作其初始值。
-      2. **这个 prop 以一种原始的值传入且需要进行转换。**在这种情况下，最好使用这个 prop 的值来定义一个计算属性。
-      3. 原因：JavaScript 中对象和数组是通过引用传入的，所以对于一个数组或对象类型的 prop 来说，在子组件中改变变更这个对象或数组本身**将会**影响到父组件的状态。
-
-      类型检查： prop 会在一个组件实例创建**之前**进行验证，所以实例的 property (如 `data`、`computed` 等) 在 `default` 或 `validator` 函数中是不可用的
-
-      ```vue
-      Vue.component('my-component', {
-        props: {
-          // 基础的类型检查 (`null` 和 `undefined` 会通过任何类型验证)
-          propA: Number,
-          // 多个可能的类型
-          propB: [String, Number],
-          // 必填的字符串
-          propC: {
-            type: String,
-            required: true
-          },
-          // 带有默认值的数字
-          propD: {
-            type: Number,
-            default: 100
-          },
-          // 带有默认值的对象
-          propE: {
-            type: Object,
-            // 对象或数组默认值必须从一个工厂函数获取
-            default: function () {
-              return { message: 'hello' }
-            }
-          },
-          // 自定义验证函数
-          propF: {
-            validator: function (value) {
-              // 这个值必须匹配下列字符串中的一个
-              return ['success', 'warning', 'danger'].indexOf(value) !== -1
-            }
-          }
-        }
-      })
-      ```
-
-   2. 子组件可以通过调用内建的 `$emit`方法并传入事件名称来触发一个事件, 
-
-      还可以使用事件抛出一个值, 父级组件监听这个事件的时候，可以通过 `$event` 访问到被抛出的这个值. 
-
-      或者作为第一个参数传入事件处理函数的方法.
-
-   3. 兄弟组件之间，通过中央管道：就是将Vue实例作为原型对象的属性值，然后所有Vue组件都可以使用它（根组件和子组件）来进行事件的监听和触发，实现组件间通信。
-
-      ```vue
-      Vue.prototype.$custom = new Vue
-      this.$custom.$on('eventName',($event)=>{ console.log($event) })
-      this.$custom.$emit('eventName',this.info)
-      ```
-
-4. 属性Attribute的继承。
-
-   1. 组件中非 Prop 的 Attribute：是指传向一个组件，但是该组件并没有相应 prop 定义的 attribute，这些 attribute 会被添加到这个组件的根元素上。
-   2. Attribute的替换和合并：大多数attribute，从外部提供给组件的值回替换掉组件内部设置好的值。但class和style的attribute会合并。
-   3. 禁用attribute继承：可以在组件的选项中设置 `inheritAttrs: false`。
-
-5. 每个组件必须只有一个根元素，单个根元素
-
-6. 组件上使用 v-model
-
-   ```vue
-   <custom-input v-model="searchText"></custom-input>
-   <!--等价于-->
-   <custom-input v-bind:value="searchText" v-on:input="searchText = $event"></custom-input>
-   
-   Vue.component("custom-input",{
-   	props:['value'],
-   	template:
-       '<input\
-         v-bind:value="value"\
-         v-on:input="$emit('input', $event.target.value)"\
-       >'
-   })
-   ```
-
-7. 通过插槽分发内容：slot元素。
-
-8. 动态组件：`is` attribute 
-
-9. 解析DOM模板：有些 HTML 元素，诸如 `<ul>`、`<ol>`、`<table>` 和 `<select>`，对于哪些元素可以出现在其内部是有严格限制的，
-
-   ```vue
-   <table>
-     <blog-post-row></blog-post-row>
-   </table>
-   <!--这个自定义组件 <blog-post-row> 会被作为无效的内容提升到外部，并导致最终渲染结果出错,需改为-->
-   <table>
-     <tr :is="blog-post-row"></tr>
-   </table>
-   ```
-
-   需要注意的是**如果我们从以下来源使用模板的话，这条限制是\*不存在\*的**：
-
-   - 字符串 (例如：`template: '...'`)
-   - 单文件组件(.vue)
-   - 脚本文件<script type='text/x-temlate'>
 

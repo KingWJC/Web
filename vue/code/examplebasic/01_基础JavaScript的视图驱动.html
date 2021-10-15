@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>
+        0
+    </h1>
+    <button>按我加1</button>
+    <button id="btn">按我减1</button>
+    <script>
+       var elH1 = document.getElementsByTagName("h1")[0];
+       var elBtn = document.getElementsByTagName("button")[0];
+       var elBtn2 = document.getElementById("btn");
+       var num = 0;
+       elBtn.onclick = function() {
+        num ++;
+        elH1.innerHTML = num;
+       }
+
+       elBtn2.onclick = function() {
+        num--;
+        elH1.innerHTML = num;
+        console.log(num)
+       }
+    </script>
+</body>
+</html>

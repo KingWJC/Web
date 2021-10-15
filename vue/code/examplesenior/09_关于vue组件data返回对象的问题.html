@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    var config = {
+        data(){
+            return {
+                name: '小明'
+            }
+        }
+    }
+    var People = function(config) {
+        this.data = config.data()
+    }
+
+    var xiaoming = new People(config)
+    var xiaohong = new People(config)
+    xiaohong.data.name = '小红'
+    console.log(xiaoming.data.name)
+    console.log(xiaohong.data.name)
+</script>
+</body>
+</html>

@@ -13,6 +13,42 @@ https://github.com/microsoft/Web-Dev-For-Beginners
 
 https://www.freecodecamp.org/learn
 
+#### npm和yarn
+
+- [官方文档](https://docs.npmjs.com/)
+- 推荐资料
+  - [npm入门](http://www.cnblogs.com/kelsen/p/4947859.html)
+  - [npm介绍](http://www.nodeclass.com/articles/810142)
+- 需要了解的知识点
+  - `package.json` 文件相关配置选项
+  - npm 本地安装、全局安装、本地开发安装等区别及相关命令
+  - npm script脚步的基本编写能力
+
+#### webpack
+
+- [官方文档](https://webpack.js.org/)
+- Webpack了解的知识点：
+  - webpack的基本配置
+  - 了解webpack常用的loader： less-loader、sass-loader、 vue-loader、style-loader、css-loader、eslint-loader、babel-loader等
+  - 熟悉Webpack的webpack-dev-server的基本配置和使用，会配置热更新
+
+#### es6语法
+
+- 阮一峰老师的大作[《ECMAScript 6 入门》](http://es6.ruanyifeng.com/)
+- 需要学习的知识点
+  - es6的模块机制
+  - 各种最新语法糖，简写、geter、setter、箭头函数
+  - 类、继承的心机制 ...
+
+#### nodejs
+
+- 知识点学习：
+  - 文件操作
+  - http服务
+  - express
+
+- 组件化开发思想
+
 ### 学习手册：
 
 https://www.w3school.com.cn/

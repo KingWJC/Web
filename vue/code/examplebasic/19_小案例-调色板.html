@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        p.pickers{
+            width: 200px;
+            height: 200px;
+            background: blue;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app" v-clock>
+    <p class="pickers" :style="{background:'rgb('+r+','+g+','+b+')'}"></p>
+        <p>
+            r:<input max="255" min="0" type="range" v-model="r"/><input max="255" min="0" v-model="r" type="number">
+        </p>
+        <p>
+            g:<input  max="255" min="0" type="range" v-model="g"/><input max="255" min="0" v-model="g" type="number">
+        </p>
+        <p>
+            b:<input  max="255" min="0" type="range" v-model="b"/><input max="255" min="0" v-model="b" type="number">
+        </p>
+    </div>
+    <script src = "js/vue.js"></script>
+    <script>
+        var vue = new Vue({
+            el: "#app",
+            data: {
+                r: 100,
+                g: 200,
+                b: 123
+            },
+            methods:{
+                
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        p{
+            width: 200px;
+            height: 200px;
+            background: blue;
+        }
+        .red{
+            background:red;
+        }
+        .pink{
+            background: pink;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" v-clock>
+        <div>
+            <p :style="{width:b+'px'}">
+                {{a}}
+            </p>
+        </div>
+        <button @click="add">点击加1</button>
+        <button @click="minus">点击减1</button>
+    </div>
+    <script src = "js/vue.js"></script>
+    <script>
+        var vue = new Vue({
+            el: "#app",
+            data: {
+                a: 0,
+                b: 100
+            },
+            methods:{
+                add(event) {
+                    this.b ++
+                },
+                minus(){
+                    this.a --
+                }
+            }
+        })
+    </script>
+</body>
+</html>
