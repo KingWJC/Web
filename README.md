@@ -7,6 +7,12 @@
 2. 样式层 样式CSS
 3. 行为层 javaScript
 
+### 关于http,XMLHttpRequest,Ajax的关系
+
+- http是浏览器和web服务器交换数据的协议,规范
+- XMLHttpRequest javascript的一个对象,是浏览器实现的一组api函数(方法),使用这些函数,浏览器再通过http协议请求和发送数据
+- Ajax不是一种技术，而是综合多种技术实现交互的模式名称：用html展示页面+使用XMLHttpRequest请求数据+使用js操作dom
+
 ### 学习课程
 
 https://github.com/microsoft/Web-Dev-For-Beginners
