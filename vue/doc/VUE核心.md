@@ -6,6 +6,8 @@ vue的双向绑定是由数据劫持结合发布者－订阅者模式实现的�
 
 就是通过Object.defineProperty()来劫持对象属性的setter和getter操作，在数据变动时做你想要做的事情。
 
+**访问器属性不能直接定义，必须是用Object.defineProperty()来定义**
+
 Object.defineProperty() ：方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回此对象。可以控制一个对象属性的一些特有操作，比如读写权，是否可枚举。更多用法，可以参考：https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
 
 ```javascript
@@ -40,6 +42,10 @@ console.log(Book)
    初始化发布者、订阅者。
 2. 订阅者需要注册到发布者，
 3. 发布者发布消息时，依次向订阅者发布消息。
+
+每个组件实例都有相应的 **watcher 实例对象**，它会在组件渲染的过程中把属性记录为依赖，之后当依赖项的 `setter` 被调用时，**会通知 `watcher` 重新计算，从而致使它关联的组件得以更新**。
+
+![img](images/data.png)
 
 ### 简易实现
 
