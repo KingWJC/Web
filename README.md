@@ -19,6 +19,10 @@ https://github.com/microsoft/Web-Dev-For-Beginners
 
 https://www.freecodecamp.org/learn
 
+#### vue
+
+https://www.aicoder.com/vue/preview/all.html#1
+
 #### npm和yarn
 
 - [官方文档](https://docs.npmjs.com/)
@@ -52,8 +56,8 @@ https://www.freecodecamp.org/learn
   - 文件操作
   - http服务
   - express
-
 - 组件化开发思想
+- https://malun666.github.io/aicoder_node/#/
 
 ### 学习手册：
 
@@ -81,7 +85,7 @@ https://www.swiper.com.cn/  触摸滑动，轮播图。
 
 https://www.aicoder.com/vue/preview/all.html#1 VUE2.0基础教程
 
-JavaScript教程(JavaScript教程 - 廖雪峰的官方网站 (liaoxuefeng.com))
+JavaScript教程(JavaScript教程 - 廖雪峰的官方网站 (liaoxuefeng.com))https://www.liaoxuefeng.com/
 
 ### 推荐书籍
 
