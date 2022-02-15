@@ -1,15 +1,33 @@
 # CSS
 
-### 定义
+## 定义
 
 Cascading Style Sheet层叠样式表，控制网页的样式。
 
 CSS的选择器区分大小写。分为：
 
-- 元素选择器 ： 元素的标签名称
+- 元素选择器 ： 元素的标签名称。
 - class选择器（在`style`样式区域声明里，`class`需以`.`开头）,页面中标签class属性值可以重复。
 - id选择器（以#开头），页面中标签id属性值唯一
 - 属性选择器([attr=value])。
+
+## 应用
+
+嵌入的标签名称，用空格隔开
+
+元素和class选择器，合并使用：label.class
+
+合并元素选择器，用逗号隔开。
+
+\* 选择所有元素。
+
+.small:last-child：表示class选择器为small，且是父元素最后一个孩子的元素。
+
+bento:nth-last-child(3)：表示元素选择器为bento，且是从右往左反向第三个以后的元素。
+
+plate:nth-of-type(even)：元素选择器为plate，且在同级节点的序号中，是偶数。
+
+plate apple:only-of-type：apple是plate中唯一的子元素。
 
 ### 思想
 
