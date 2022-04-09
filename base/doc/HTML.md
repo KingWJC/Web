@@ -1,10 +1,10 @@
-## HTML
+# HTML
 
-### 定义：
+## 定义：
 
 Hyper Test Makeup Language 超级文本标记语言。是静态页面，由标签组成
 
-### 结构
+## 结构
 
 DOCTYPE，HTML，HEAD（META，TITLE），BODY。Style，Script。Script标签一般放置程序最下方
 
@@ -69,22 +69,24 @@ DOCTYPE，HTML，HEAD（META，TITLE），BODY。Style，Script。Script标签�
 </html>
 ```
 
-### 基础元素-标签
+## 基础元素
 
-#### 块元素
+### 块元素
 
 特点：独占一行，在页面中是由上到下进行排列，元素如下：
 
 1. 标题：head，h1-h6；h1主标题, h2副标题。
 2. 段落：paragraph <P>
 3. 容器：division（层）元素，是一个盛装其他元素的通用容器。
-4. 有序列表：ordered lists
-5. 无序列表：unordered lists
+4. 导航栏：nav
+5. 有序列表：ordered lists （ul-li)
+6. 无序列表：unordered lists  (ol-li)
    1. li标签经常作为他们子元素一起使用
-6. address
-7. 音频：音频audio标签，只能播放下面三种音频格式，mp3、ogg、wav格式
+7. 定义列表：dl-dt-dd 
+8. address
+9. 音频：音频audio标签，只能播放下面三种音频格式，mp3、ogg、wav格式
 
-#### 行内元素
+### 行内元素
 
 特征：不是独占一行，从左到右进行排列
 
@@ -92,7 +94,7 @@ DOCTYPE，HTML，HEAD（META，TITLE），BODY。Style，Script。Script标签�
 
 2. 锚点：anchor, href跳转，包含页面间跳转（增加target=“_blank”，在新的空白页上打开），页内跳转，固定链接。
 
-3. span
+3. span：内联容器
 
 4. 标签：label 
 
@@ -101,16 +103,335 @@ DOCTYPE，HTML，HEAD（META，TITLE），BODY。Style，Script。Script标签�
    <button onclick="copyText()">Copy Text</button>
    ```
 
-#### 表单元素
+## 标签分类
 
-1. 表单：form,向服务器提交数据的 Web 表单。action=“/url-where you want to submit form data"
-2. 文本框：input, type="text", required必填。
-3. 按钮：input, type="submit",表单的提交按钮
-4. 单选框：input type="radio" 使用相同的name进行分组。
-5. 复选框：input type="check-box"
-6. 范围条 input type="range" min="0" max="255" value="0"
+### 布局标签
 
-## HTML5
+| 标签 | 说明     |
+| ---- | -------- |
+| div  | 块容器   |
+| span | 内联容器 |
+| nav  | 导航栏   |
+
+### 列表标签
+
+| 标签     | 说明     |
+| -------- | -------- |
+| ul-li    | 无序列表 |
+| ol-li    | 有序列表 |
+| dl-dt-dd | 定义列表 |
+
+### 文本标签
+
+* 文本容器标签
+
+  | 标签  | 说明 |
+  | ----- | ---- |
+  | h1-h6 | 标题 |
+  | p     | 段落 |
+
+* 文本修饰标签
+
+  | 标签     | 说明                                                       |
+  | -------- | ---------------------------------------------------------- |
+  | em,i     | 斜体                                                       |
+  | b,strong | 黑体                                                       |
+  | small    | 细体                                                       |
+  | br       | 换行                                                       |
+  | del      | 删除线                                                     |
+  | sup      | 上标(包含在\<sup>\</sup> 中的内容会上浮一半字符的高度显示) |
+  | sub      | 下标(会下沉一半字符的高度显示)                             |
+
+<sup>标签如果和 <a> 标签结合起来使用，可以创建出很好的超链接脚注
+
+### 表格标签
+
+| 标签  | 说明         |
+| ----- | ------------ |
+| table | 定义一个表格 |
+| thead | 表格头       |
+| tbody | 表格体       |
+| tr    | 行           |
+| th    | 表格头的列   |
+| td    | 列           |
+
+#### table属性
+
+| 属性        | 说明         |
+| ----------- | ------------ |
+| cellpadding | 单元格内间距 |
+| cellspacing | 单元格外间距 |
+
+单元格双边框问题只需设置：border-collapse: collapse即可。
+
+当然还有表格隔行变色的设置：
+
+```css
+.tablelist tr:nth-child(odd){background: #c80}/*奇数行*/
+.tablelist tr:nth-child(even){background: #ccc}/*偶数行*/
+```
+
+#### 行合并rowspan
+
+![image-20220105110812220](images/image-20220105110812220.png)
+
+![image-20220105110846200](images/image-20220105110846200.png)
+
+#### 列合并colspan
+
+![image-20220105111024093](images/image-20220105111024093.png)
+
+![image-20220105110951741](typora/image-20220105110951741.png)
+
+### 表单标签
+
+| 标签     | 说明     |
+| -------- | -------- |
+| form     | 表单容器 |
+| input    | 基本输入 |
+| select   | 下拉选择 |
+| button   | 按钮     |
+| label    | 文字     |
+| textarea | 多行文本 |
+
+#### form标签属性
+
+向服务器提交数据的 Web 表单
+
+| 属性   | 说明                      |
+| ------ | ------------------------- |
+| method | 提交方式：get或post       |
+| action | 提交的地址                |
+| target | 打开方式(同a标签的target) |
+
+#### input标签详解
+
+* type
+
+| 值       | 说明                           |
+| -------- | ------------------------------ |
+| text     | 文本输入                       |
+| password | 密码输入                       |
+| button   | 按钮                           |
+| submit   | 表单提交                       |
+| radio    | 单选框(使用相同的name进行分组) |
+| checkbox | 多选框                         |
+| file     | 文件选择                       |
+| number   | 数字                           |
+| range    | 范围条                         |
+
+* name
+
+  提交表单中的key
+
+* value
+
+  提交表单key对应的值
+
+#### select
+
+```html
+<!--单选-->
+<select name="sex">
+  <option value="男">男</option>
+  <option value="女">女</option>
+  <option value="未知">未知</option>
+</select>
+
+<!--多选-->
+<select name="menu" multiple>
+    <option value="护士站">护士站</option>
+    <option value="医生站">医生站</option>
+    <option value="科室报表">科室报表</option>
+</select>
+```
+
+#### button
+
+```html
+<button>按钮</button>
+<button type="submit">按钮</button>
+```
+
+#### label
+
+通常用于输入提示或者和单选框多选框配合使用
+
+```html
+<label>姓名</label><input type="text"/>
+
+<label for="man">
+  <input type="radio" id="man"/>男
+</label>
+```
+
+### 超链接标签
+
+超链接标签：<a href="https:www.baidu.com"></a>
+
+#### href
+
+超链接指向
+
+| href     | 说明                                                      |
+| -------- | --------------------------------------------------------- |
+| URL      | 统一资源定位符，如:https://www.baidu.com                  |
+| URI      | 统一资源标识符，如tel:10086或mailto:liuhaogang123@163.com |
+| 文件路径 | ./index.html                                              |
+
+#### target
+
+打开方式
+
+| target     | 说明             |
+| ---------- | ---------------- |
+| _blank     | 重新打开一个页面 |
+| _self      | 本页面跳转       |
+| _parent    | 父页面打开       |
+| _top       | 顶级页面打开     |
+| frame name | 指定iframe中打开 |
+
+### 图像标签
+
+图像标签是一个自闭合的标签：<img />
+
+| 属性 | 说明                                                         |
+| ---- | ------------------------------------------------------------ |
+| src  | 可以是一个本地图片的地址(绝对地址或相对地址)；也可以是一个Base64的字符串，也可以是一个来自于网络的图片地址 |
+| alt  | 图片的说明，当鼠标移到图片上时会显示的文字，当图片发生错误时会直接显示该说明 |
+
+src的四种写法
+
+```html
+<!--相对路径-->
+<img src="./imgs/jhsmicu.png" alt="嘉和logo" />
+
+<!--绝对路径-->
+<img src="E:/imgs/jhsmicu.png" alt="嘉和logo" />
+
+<!--网络路径-->
+<img src="https://gimg2.baidu.com/..." alt="嘉和logo" />
+
+<!--base64-->
+<img src="data:image/ico;base64,AAABAAEAEBA..." alt="嘉和logo" />
+
+```
+
+### 多媒体标签
+
+1. embed
+
+   embed标签用来插入各种多媒体，如
+
+   ```html
+   <embed src="多媒体地址" />
+   ```
+
+   注意：embed是一个html5标签
+
+2. audio
+
+   音频标签
+
+3. video
+
+   视频标签
+
+| 属性名称 | 说明     |
+| -------- | -------- |
+| controls | 控制按钮 |
+| autoplay | 自动播放 |
+| loop     | 循环播放 |
+
+### 内联框架标签
+
+用来嵌入其他页面的标签
+
+src：指定引入其他页面的路径
+
+```html
+<iframe src="https://www.baidu.com" width="800" height="600"></iframe>
+```
+
+## 常用属性
+
+1. class
+
+   定义样式的class类名，如
+
+   ```html
+   <style>
+       .box{
+           border:1px solid red;
+       }
+       .bgblue{
+           background-color:blue
+       }
+   </style>
+   ...
+   <div class="box bgblue">
+   我是一个盒子
+   </div>
+   ```
+
+2. style
+
+   定义元素的样式，如
+
+   ```html
+   <div style="border:1px solid red;background-color:blue">
+   我是一个盒子
+   </div>
+   ```
+
+3. id
+
+   定义元素的唯一标识
+
+4. name
+
+   定义元素的检索标识
+
+5. title
+
+   定义元素当鼠标覆盖时显示的文字
+
+## 自定义属性
+
+html标签中，除了标准的属性名外，还可以自定义属性名（属性值为String类型）
+
+1. 直接使用定义属性名
+
+   ```html
+     <button desc="this is a button">Click me!</button>
+     
+     <script>
+       var btn = document.querySelector('button')
+       console.log(btn.getAttribute('desc')) // 获取属性值
+       btn.setAttribute('tip', 'please click button') // 设置属性值
+     </script>
+   
+   显示为：<button desc="this is a button" tip="please click button">Click me!</button>
+   ```
+
+2. 使用“data-自定义属性名”
+
+   自定义属性名前面加上**data-**，获取/赋值都需要通过**dataset**，所有data-开头的数据都存在dataset中
+
+   ```html
+     <button data-desc="this is a button">Click me!</button>
+     
+     <script>
+       var btn = document.querySelector('button')
+       console.log(btn.dataset.desc) // 获取属性值
+       btn.dataset.tip = 'please click button' // 设置属性值
+         
+   显示为：<button data-desc="this is a button" data-tip="please click button">Click me!</button>
+   ```
+
+3. 使用js添加属性
+
+# HTML5
 
 HTML5 成为 HTML、XHTML 以及 HTML DOM 的新标准。
 
@@ -125,7 +446,7 @@ HTML5 是 W3C（World Wide Web Consortium，万维网联盟） 与 WHATWG 合作
 - e.HTML5 应该独立于设备
 - f.开发进程应对公众透明
 
-### 新增元素
+## 新增元素
 
 新的特殊内容元素
 
@@ -153,7 +474,7 @@ HTML5 是 W3C（World Wide Web Consortium，万维网联盟） 与 WHATWG 合作
 7. Canvas 是逐像素进行渲染的。
 8. 在 canvas 中，一旦图形被绘制完成，它就不会继续得到浏览器的关注。如果其位置发生变化，那么整个场景也需要重新绘制，包括任何或许已被图形覆盖的对象
 
-### 表单属性
+## 表单属性
 
 1. 新的 form 属性：
 
@@ -333,7 +654,7 @@ HTML5 是 W3C（World Wide Web Consortium，万维网联盟） 与 WHATWG 合作
 	Name: <input type="text" name="usr_name" required="required" />
 ```
 
-### 拖放
+## 拖放
 
 1. 拖放（Drag 和 drop）是 HTML5 标准的组成部分：
 
@@ -370,7 +691,7 @@ HTML5 是 W3C（World Wide Web Consortium，万维网联盟） 与 WHATWG 合作
 
       d.把被拖元素追加到放置元素（目标元素）中
 
-### 内联 SVG
+## 内联 SVG
 
 定义
 
@@ -400,7 +721,7 @@ HTML5 是 W3C（World Wide Web Consortium，万维网联盟） 与 WHATWG 合作
 
 （5）SVG 可在图像质量不下降的情况下被放大
 
-### Canvas 与 SVG 的比较
+## Canvas 与 SVG 的比较
 
 | Canvas：                                           | SVG：                                                   |
 | -------------------------------------------------- | ------------------------------------------------------- |
@@ -410,7 +731,7 @@ HTML5 是 W3C（World Wide Web Consortium，万维网联盟） 与 WHATWG 合作
 | 能够以 .png 或 .jpg 格式保存结果图像               | 复杂度高会减慢渲染速度（任何过度使用 DOM 的应用都不快） |
 | 最适合图像密集型的游戏，其中的许多对象会被频繁重绘 | 不适合游戏应用                                          |
 
-### 地理定位
+## 地理定位
 
 HTML5 Geolocation API 用于获得用户的地理位置，
 
@@ -418,7 +739,7 @@ HTML5 Geolocation API 用于获得用户的地理位置，
 
 如果getCurrentPosition()运行成功，则向参数showPosition中规定的函数返回一个coordinates对象，showPosition() 函数获得并显示经度和纬度
 
-### web存储
+## web存储
 
 1. HTML5 提供了两种在客户端存储数据的新方法：
 
@@ -434,7 +755,7 @@ HTML5 Geolocation API 用于获得用户的地理位置，
 
 5. HTML5 使用 JavaScript 来存储和访问数据
 
-### 应用程序缓存
+## 应用程序缓存
 
 HTML5 引入了应用程序缓存，这意味着 web 应用可进行缓存，并可在没有因特网连接时进行访问。
 
@@ -449,22 +770,38 @@ HTML5 引入了应用程序缓存，这意味着 web 应用可进行缓存，并
 
 使用 HTML5，通过创建 cache manifest 文件，可以轻松地创建 web 应用的离线版本。
 
-### Web Workers
+## Web Workers
 
 web worker 是运行在后台的 JavaScript，独立于其他脚本，不会影响页面的性能。您可以继续做任何愿意做的事情：点击、选取内容等等，而此时 web worker 在后台运行
 
 ```javascript
-    w=new Worker("demo_workers.js");		
-    w.onmessage=function(event){
-        document.getElementById("result").innerHTML=event.data;
+w=new Worker("demo_workers.js");		
+w.onmessage=function(event){
+				document.getElementById("result").innerHTML=event.data;
     };
-    w.terminate();
+w.terminate();
 ```
 
 由于 web worker 位于外部文件中，它们无法访问下例 JavaScript 对象：window 对象、document 对象、parent 对象
 
-### 服务器发送事件
+## 服务器发送事件
 
 HTML5 服务器发送事件（server-sent event），允许网页自动获取来自服务器的更新,
 
 以前也可能做到这一点，前提是网页不得不询问是否有可用的更新。通过服务器发送事件，更新能够自动到达。
+
+## WebSocket
+
+WebSocket是一种基于TCP网络通信协议，是在单个TCP连接上进行双全工通讯的协议，可实现服务器主动向客户端推送数据。
+
+在WebSocketAPI中，浏览器和服务器只需要完成一次握手，两者之间就可以直接创建持久性的连接，并进行双向数据传输。
+
+现在，大多数的网站为了实现这种类似于推送的技术，使用的技术都是Ajax轮询。这种传统的模式带来很明显的缺点，就是浏览器需要不断的向服务器发送请求，然而HTTP请求通常都会包含较长的头部，其中真正有效的数据很少，显然这样做很浪费宽带资源。
+
+HTML5定义的Socket协议，能更好的节省服务器资源和带宽，并且可以实时的进行通信。
+
+![img](images/ws.png)
+
+浏览器通过JavaScript向服务器发送建立WebSocket连接连接建立以后，客户端和服务器端就可以通过 TCP 连接直接交换数据。
+
+当你获取 Web Socket 连接后，你可以通过 **send()** 方法来向服务器发送数据，并通过 **onmessage** 事件来接收服务器返回的数据。

@@ -2,5 +2,6 @@
     "emmet.includeLanguages": {
         "vue-html": "html",
         "vue": "html"
-    }
+    },
+    "liveServer.settings.port": 5501
 }
