@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.8">
+    <title>
+        购物车
+    </title>
+    <script src="../js/vue.js"></script>
+    <style>
+        body {
+            user-select: none;
+        }
+
+        table {
+            width: 100%;
+            border: 1px solid #555;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            border: 1px solid black;
+            text-align: center;
+        }
+
+        th {
+            background: orange;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <table>
+            <thead>
+                <tr>
+                    <th>商品名称</th>
+                    <th>商品单价</th>
+                    <th>数量</th>
+                    <th>商品小计</th>
+                    <th>删除</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item, index) in list" :key="index">
+                    <td>{{item.name}}</td>
+                    <td>{{item | showItemPrice}}</td>
+                    <td>
+                        <button v-on:click="cut(item)" :disabled="btnCanMoreClick(item)">
+                            减
+                        </button>
+                        {{item.count}}
+                        <button @click="add(index)">
+                            加
+                        </button>
+                    </td>
+                    <td>
+                        {{item | sumItemTotal}}
+                    </td>
+                    <td>
+                        <button @click="remove(index)">删除</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div>结算：{{sumAllTotal}}</div>
+    </div>
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                list: [
+                    {
+                        name: "商品1",
+                        count: 1,
+                        price: 9899
+                    },
+                    {
+                        name: "商品2",
+                        count: 1,
+                        price: 8699
+                    },
+                    {
+                        name: "商品3",
+                        count: 1,
+                        price: 11999
+                    },
+                    {
+                        name: "商品4",
+                        count: 1,
+                        price: 13999
+                    }
+                ]
+            },
+            methods: {
+                cut: function (commodity) {
+                    commodity.count--;
+                },
+
+                add: function (index) {
+                    this.list[index].count++;
+                },
+
+                remove: function (index) {
+                    this.list.splice(index, 1);
+                }
+            },
+            computed: {
+                sumAllTotal() {
+                    let total = 0;
+                    this.list.forEach((commodity, index) => {
+                        total += commodity.price * commodity.count;
+                    })
+                    return total;
+                },
+
+                btnCanMoreClick() {
+                    return function (commodity) {
+                        return commodity.count <= 1;
+                    }
+                }
+            },
+            filters: {
+                showItemPrice(commodity) {
+                    return '￥' + commodity.price;
+                },
+
+                sumItemTotal(commodity) {
+                    return '￥' + (commodity.price * commodity.count);
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
